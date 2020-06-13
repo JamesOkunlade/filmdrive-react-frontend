@@ -3,8 +3,8 @@ import * as actionTypes from '../actions';
 
 const initialState = {
     theme: {
-        background: 'green',
-        color: 'red'
+        background: 'white',
+        color: 'black'
     }
 }
 
@@ -13,9 +13,13 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SET_THEME:
             return {
                 ...state,
-                theme: {background: 'blue', color: 'black'}
+                theme: {
+                    ...state.theme,
+                    background: 'black', color: 'white'
+                }
             }
-        default: return state;
+        default: 
+            return state;
     }
 };
 

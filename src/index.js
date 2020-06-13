@@ -7,10 +7,12 @@ import thunk from 'redux-thunk';
 import './assets/styles/app.scss';
 import App from './components/App';
 import theme from './store/reducers/theme';
+import movies from './store/reducers/movies';
 
 
 const rootReducer = combineReducers({
-    thm: theme
+    thm: theme,
+    mvs: movies
 })
 
 
