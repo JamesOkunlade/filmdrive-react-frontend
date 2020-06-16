@@ -1,31 +1,42 @@
+import axios from 'axios';
+
 export const SET_THEME = 'SET_THEME';
-export const FETCH_MOVIES = 'FETCH_MOVIES';
-export const FETCHING_MOVIES = 'FETCHING_MOVIES';
-export const FETCH_ERROR = 'FETCH_ERROR'
-export const LOAD_MOVIES = 'LOAD_MOVIES';
+export const REQUEST_MOVIES = 'REQUEST_MOVIES';
+export const RECEIVE_MOVIES = 'RECEIVE_MOVIES';
+export const ERROR_REQUESTING = 'ERROR_REQUESTING';
 
 
-
-const fetchMovies = () => {
-    const fetchUrl = 'https://financialmodelingprep.com/api/v3/search?query=AA&limit=9999&exchange=NASDAQ&apikey=ddb056dfeecb93aaa20254b2abff4887';
-    return dispatch => {
-        dispatch({type: FETCHING_MOVIES});
-        return fetch(fetchUrl)
-            .then(response => response.json())
-            .then(movies => {
-                dispatch({
-                    type: FETCH_MOVIES,
-                    movies: movies
-                });
-            })
-            .catch(err => dispatch({
-                type: FETCH_ERROR,
-                error: err
-            }))
+function requestMovies() {
+    return {
+        type: REQUEST_MOVIES
     }
 }
 
-export { fetchMovies };
+function receiveMovies(res) {
+    return {
+        type: RECEIVE_MOVIES,
+        movies: res.data.movies,
+        receivedAt: Date.now()
+    }
+}
+
+function errorRequesting(err) {
+    return {
+        type: ERROR_REQUESTING,
+        error: err
+    }
+}
+
+export function fetchMovies() {
+    return function(dispatch) {
+        dispatch(requestMovies())
+        return axios.get('https://yts.mx/api/v2/list_movies.json')
+            .then(response => response)
+            .then(response => dispatch(receiveMovies(response)))
+            .catch(err => dispatch(errorRequesting(err)))
+    }
+}
+
 
 
 

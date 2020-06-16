@@ -14,7 +14,7 @@ class App extends Component {
 
     return (
       <div className='App' style={themeSetting}>
-        <button onClick={this.props.changeTheme}>ChangeTheme</button>
+        <button className='float-button' onClick={this.props.changeTheme}>ChangeTheme</button>
         <Routes />
       </div>
     );

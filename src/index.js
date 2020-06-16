@@ -1,20 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 import './assets/styles/app.scss';
 import App from './components/App';
-import theme from './store/reducers/theme';
-import movies from './store/reducers/movies';
-
-
-const rootReducer = combineReducers({
-    thm: theme,
-    mvs: movies
-})
-
+import rootReducer from './store/reducers/index';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
