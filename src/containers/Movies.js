@@ -4,12 +4,13 @@ import { connect } from "react-redux";
 
 import Header from "../components/Header";
 import MovieCard from "../components/MovieCard";
-import { fetchMovies } from "../store/actions";
+import { fetchMovies, fetchCategories, fetchMoviesByCategory } from "../store/actions";
 
 class Movies extends Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchMovies());
+    // const { dispatch } = this.props;
+    // dispatch(fetchMovies());
+    this.props.fetchMovies();
   }
 
   render() {
@@ -21,16 +22,15 @@ class Movies extends Component {
         <Header />
         <div className="container movies-container">
           <p>
-            {new Date(lastUpdated).toLocaleTimeString()}.{""}{" "}
+            {new Date(lastUpdated).toLocaleTimeString()}
           </p>
           {movies? (
             <div style={{ opacity: isFetching ? 0.1 : 1 }}>
-            {movies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
+            {movies.map((movie, index) => (
+              <MovieCard key={index} movie={movie} />
             ))}
           </div>
           ) : (<div>{console.log(error)}</div>) }
-          
         </div>
       </div>
     );
@@ -44,13 +44,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         fetchMovies: () => dispatch({type: FETCH_MOVIES})
-//     }
-// }
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchMovies: () => dispatch(fetchMovies()),
+        fetchCategories: () => dispatch(fetchCategories()),
+        fetchMoviesByCategory: (category) => dispatch(fetchMoviesByCategory(category))
+    }
+}
 
-// const mapDispatchToProps = dispatch => (fetchMovies())
-
-export default connect(mapStateToProps)(Movies);
-// export default Movies;
+export default connect(mapStateToProps, mapDispatchToProps)(Movies);

@@ -1,10 +1,16 @@
-import axios from 'axios';
-
 export const SET_THEME = 'SET_THEME';
 export const REQUEST_MOVIES = 'REQUEST_MOVIES';
 export const RECEIVE_MOVIES = 'RECEIVE_MOVIES';
-export const ERROR_REQUESTING = 'ERROR_REQUESTING';
+export const ERROR_REQUESTING_MOVIES = 'ERROR_REQUESTING_MOVIES';
+export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES';
+export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
+export const ERROR_REQUESTING_CATEGORIES = 'ERROR_REQUESTING_CATEGORIES';
+export const REQUEST_MOVIES_BY_CATEGORIES = 'REQUEST_MOVIES_BY_CATEGORIES';
+export const RECEIVE_MOVIES_BY_CATEGORIES = 'RECEIVE_MOVIES_BY_CATEGORIES';
+export const ERROR_REQUESTING_MOVIES_BY_CATEGORIES = 'ERROR_REQUESTING_MOVIES_BY_CATEGORIES';
 
+
+// FETCH MOVIES ACTIONS CREATORS
 
 function requestMovies() {
     return {
@@ -12,29 +18,54 @@ function requestMovies() {
     }
 }
 
-function receiveMovies(res) {
+function receiveMovies(response) {
     return {
         type: RECEIVE_MOVIES,
-        movies: res.data.movies,
+        movies: response.data.movies,
+        fetchStatus: response.status,
         receivedAt: Date.now()
     }
 }
 
 function errorRequesting(err) {
     return {
-        type: ERROR_REQUESTING,
-        error: err
+        type: ERROR_REQUESTING_MOVIES,
+        error: err,
     }
 }
 
 export function fetchMovies() {
     return function(dispatch) {
         dispatch(requestMovies())
-        return axios.get('https://yts.mx/api/v2/list_movies.json')
-            .then(response => response)
+        return fetch('https://yts.mx/api/v2/list_movies.json')
+            .then(response => response.json())
             .then(response => dispatch(receiveMovies(response)))
-            .catch(err => dispatch(errorRequesting(err)))
+            .catch(error => dispatch(errorRequesting(error)))
     }
+}
+
+// FETCH CATEGORIES ACTIONS CREATORS
+
+function requestCategories() {
+
+}
+
+function receiveCategories() {
+
+}
+
+function errorRequestingCategories() {
+
+}
+
+export function fetchCategories() {
+
+}
+
+// FETCH MOVIES BY CATEGORY ACTIONS CREATORS
+
+export function fetchMoviesByCategory() {
+
 }
 
 

@@ -3,10 +3,11 @@ import React from 'react';
 
 
 const MovieCard = ({movie}) => {
-    const { title, year, genre, synopsis, medium_cover_image  } = movie;
+    const { id, title, year, genre, synopsis, medium_cover_image  } = movie;
 
     return (
         <div>
+            <p>{id}</p>
             <h1>{title}</h1>
             <h3>{year}</h3>
             <h3>{genre}</h3>
