@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
 import Header from "../components/Header";
 import MovieCard from "../components/MovieCard";
@@ -18,9 +18,8 @@ class Movies extends Component {
     if (isFetching) {
         moviesList = 'Loading...'
     }
-    if (movies) {
-        moviesList = movies.map((movie, index) => (<MovieCard key={index} movie={movie} />))
-    } 
+    moviesList = movies.map((movie, index) => (<MovieCard key={index} movie={movie} />))
+    
     return (
       <div>
         <Header />
@@ -45,7 +44,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchMovies: () => dispatch(fetchMovies()),
-        // fetchCategories: () => dispatch(fetchCategories()),
         setCategoryFilter: category => dispatch(setCategoryFilter(category))
     }
 }

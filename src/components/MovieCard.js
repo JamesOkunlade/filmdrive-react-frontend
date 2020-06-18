@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const MovieCard = ({movie}) => {
     const { id, title, year, genres, synopsis, medium_cover_image  } = movie;
@@ -11,7 +12,7 @@ const MovieCard = ({movie}) => {
             <h3>{year}</h3>
             <ul>{genresList}</ul>
             <p>{synopsis}</p>
-            <img src={medium_cover_image} alt={`${title}`} />
+            <Link to={`/movie/${id}`}><img src={medium_cover_image} alt={`${title}`} /></Link>
         </div>
     )
 }
