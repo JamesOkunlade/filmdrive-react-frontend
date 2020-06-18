@@ -25,10 +25,11 @@ const reducer = (state = initialState, action) => {
     case ERROR_REQUESTING_MOVIES: {
       return Object.assign({}, state, {
         isFetching: false,
-        error: action.error,
+        error: action.error.length > 0? action.error : 'Check your network connection',
         moviesFetchStatus: action.fetchStatus,
       });
     }
+    
     default: {
       return state;
     }
