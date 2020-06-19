@@ -4,7 +4,7 @@ const movieCategories = ['All', 'Comedy', 'Sci-fi', 'Horror', 'Romance', 'Action
 
 const CategoryFilter = (props) => {
     const { handleFilterChange } = props;
-    const filterOptions = movieCategories.map(category => (<option key={category} value={category}>{category}</option>))
+    const filterOptions = movieCategories.map(category => (<option key={category} name={category}>{category}</option>))
 
     return (
         <div>

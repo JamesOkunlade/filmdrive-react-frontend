@@ -1,7 +1,7 @@
 import { SET_CATEGORY } from '../actions';
 
 const initialState = {
-    category: ''
+    category: 'All'
 }
 
 const reducer = (state=initialState, action) => {

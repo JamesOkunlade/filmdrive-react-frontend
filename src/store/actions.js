@@ -72,7 +72,11 @@ function setCategory(category) {
 export function setCategoryFilter(category) {
     return function(dispatch) {
         dispatch(setCategory(category))
-        dispatch(fetchMoviesByCategory(category))
+        if (category === 'All') {
+            dispatch(fetchMovies())
+        } else{
+            dispatch(fetchMoviesByCategory(category))
+        }
     }
 }
 
