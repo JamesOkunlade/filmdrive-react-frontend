@@ -14,18 +14,19 @@ class Movies extends Component {
   render() {    
     const { movies, isFetching } = this.props.movies;
     const handleFilterChange = event => this.props.setCategoryFilter(event.target.value); 
+
     let moviesList;
-    if (isFetching) {
-        moviesList = 'Loading...'
-    }
-    moviesList = movies.map((movie, index) => (<MovieCard key={index} movie={movie} />))
+    // if (isFetching) {
+    //     moviesList = () => (<h3>Loading...</h3>)
+    // }
+    moviesList = movies.map((movie) =>  (<MovieCard key={movie.id} movie={movie} />))
     
     return (
       <div>
         <Header />
         <div className="container movies-container">
             <CategoryFilter handleFilterChange={handleFilterChange} />
-            <div style={{ opacity: isFetching ? 0.9 : 1 }}>
+            <div style={{ opacity: isFetching ? 0.5 : 1 }}>
             { moviesList }
           </div>
         </div>
@@ -44,7 +45,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchMovies: () => dispatch(fetchMovies()),
-        setCategoryFilter: category => dispatch(setCategoryFilter(category))
+        setCategoryFilter: category => dispatch(setCategoryFilter(category)),
     }
 }
 

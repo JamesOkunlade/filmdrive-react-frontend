@@ -3,6 +3,10 @@ export const REQUEST_MOVIES = 'REQUEST_MOVIES';
 export const RECEIVE_MOVIES = 'RECEIVE_MOVIES';
 export const ERROR_REQUESTING_MOVIES = 'ERROR_REQUESTING_MOVIES';
 export const SET_CATEGORY = 'SET_CATEGORY';
+export const REQUEST_MOVIE_BY_ID = 'REQUEST_MOVIE_BY_ID';
+export const RECEIVE_MOVIE_BY_ID = 'FETCH_MOVIE_BY_ID'
+export const ERROR_REQUESTING_MOVIE_BY_ID = 'ERROR_REQUESTING_MOVIE_BY_ID';
+
 
 
 export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES';
@@ -38,12 +42,16 @@ function errorRequestingMovies(error) {
 }
 
 export function fetchMovies() {
-    return function(dispatch) {
+    return async function(dispatch) {
         dispatch(requestMovies())
-        return fetch(`https://yts.mx/api/v2/list_movies.json?limit=50`)
-            .then(response => response.json())
-            .then(response => dispatch(receiveMovies(response)))
-            .catch(error => dispatch(errorRequestingMovies(error)))
+        try {
+            const response = await fetch(`https://yts.mx/api/v2/list_movies.json?limit=50`);
+            const response_1 = await response.json();
+            return dispatch(receiveMovies(response_1));
+        }
+        catch (error) {
+            return dispatch(errorRequestingMovies(error));
+        }
     }
 }
 
@@ -53,12 +61,16 @@ export function fetchMovies() {
 // FETCH MOVIES BY CATEGORY ACTIONS CREATORS
 
 function fetchMoviesByCategory(category) {
-    return function(dispatch) {
+    return async function(dispatch) {
         dispatch(requestMovies())
-        return fetch(`https://yts.mx/api/v2/list_movies.json?limit=50&genre=${category}`)
-            .then(response => response.json())
-            .then(response => dispatch(receiveMovies(response)))
-            .catch(error => dispatch(errorRequestingMovies(error)))
+        try {
+            const response = await fetch(`https://yts.mx/api/v2/list_movies.json?limit=50&genre=${category}`);
+            const response_1 = await response.json();
+            return dispatch(receiveMovies(response_1));
+        }
+        catch (error) {
+            return dispatch(errorRequestingMovies(error));
+        }
     }
 }
 
@@ -80,6 +92,42 @@ export function setCategoryFilter(category) {
     }
 }
 
+// FETCH MOVIE BY ID ACTIONS CREATORS
+
+function requestMovieById() {
+    return {
+        type: REQUEST_MOVIE_BY_ID
+    }
+}
+
+function receiveMovieById(response) {
+    return {
+        type: RECEIVE_MOVIE_BY_ID,
+        movie: response.data.movie,
+        fetchStatus: response.status,
+    }
+}
+
+function errorRequestingMovieById(error) {
+    return {
+        type: ERROR_REQUESTING_MOVIE_BY_ID,
+        error: error,
+    }
+}
+
+export function fetchMovieById(movieId) {
+    return async function(dispatch) {
+        dispatch(requestMovieById())
+        try {
+            const response = await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${movieId}`);
+            const response_1 = await response.json();
+            return dispatch(receiveMovieById(response_1));
+        }
+        catch (error) {
+            return dispatch(errorRequestingMovieById(error));
+        }
+    }
+}
 
 
 

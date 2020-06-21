@@ -1,4 +1,8 @@
-import { REQUEST_MOVIES, RECEIVE_MOVIES, ERROR_REQUESTING_MOVIES } from "../actions";
+import {
+  REQUEST_MOVIES,
+  RECEIVE_MOVIES,
+  ERROR_REQUESTING_MOVIES,
+} from "../actions";
 
 const initialState = {
   movies: [],
@@ -11,25 +15,28 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case REQUEST_MOVIES: {
-      return Object.assign({}, state, { isFetching: true });
-    }
-    case RECEIVE_MOVIES: {
-      return{
-          ...state,
-          isFetching: false,
-          lastUpdated: action.receivedAt,
-          moviesFetchStatus: action.fetchStatus,
-          movies: [...state.movies.slice(state.movies.length), ...action.movies],
+      return {
+        ...state,
+        isFetching: true
       }
     }
-    case ERROR_REQUESTING_MOVIES: {
-      return Object.assign({}, state, {
+    case RECEIVE_MOVIES: {
+      return {
+        ...state,
         isFetching: false,
-        error: action.error.length > 0? action.error : 'Check your network connection',
+        lastUpdated: action.receivedAt,
         moviesFetchStatus: action.fetchStatus,
-      });
+        movies: [...state.movies.slice(state.movies.length), ...action.movies],
+      };
     }
-    
+    case ERROR_REQUESTING_MOVIES: {
+      return {
+        ...state,
+        isFetching: false,
+        moviesFetchStatus: action.fetchStatus,
+        error:action.error
+      }
+    }
     default: {
       return state;
     }

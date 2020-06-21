@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Routes from './Routes';
-import * as actionTypes from '../store/actions';
+import { SET_THEME } from '../store/actions';
 
 class App extends Component {
   render () {
@@ -29,7 +29,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeTheme: () => dispatch({type: actionTypes.SET_THEME })
+    changeTheme: () => dispatch({type: SET_THEME })
   };
 };
   
