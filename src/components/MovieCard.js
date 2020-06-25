@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 const MovieCard = (props) => {
     
     const { id, title, year, genres, description_full, medium_cover_image  } = props.movie;
-    const genresList = genres.map((genre, index) =>(<li key={index}>{genre}</li>))
+    // const genresList = genres.map((genre, index) =>(<li key={index}>{genre}</li>))
     // const handleclick =  props.setClickedMovie(movieId)
 
     return (
@@ -14,7 +14,7 @@ const MovieCard = (props) => {
             <p>{id}</p>
             <Link to={`/movie/${id}`}><h1>{title}</h1></Link>
             <h3>{year}</h3>
-            <ul>{genresList}</ul>
+            <ul>{genres}</ul>
             <p>{description_full}</p>
             <Link to={`/movie/${id}`}><img src={medium_cover_image} alt={title} /></Link>
         </div>
